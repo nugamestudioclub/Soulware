@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "robot_roguelike", "robot_roguelike.csproj", "{FD0D31ED-D464-4B7E-94E4-8ED7C32850A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD0D31ED-D464-4B7E-94E4-8ED7C32850A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD0D31ED-D464-4B7E-94E4-8ED7C32850A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD0D31ED-D464-4B7E-94E4-8ED7C32850A0}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{FD0D31ED-D464-4B7E-94E4-8ED7C32850A0}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{FD0D31ED-D464-4B7E-94E4-8ED7C32850A0}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{FD0D31ED-D464-4B7E-94E4-8ED7C32850A0}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal
