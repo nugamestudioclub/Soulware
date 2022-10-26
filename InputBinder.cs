@@ -39,26 +39,39 @@ public class InputBinder : Node
         None,
         Keyboard,
         Mouse,
-        Controller,
+        ControllerButton,
+        ControllerMotion,
     }
 
     //Tuple struct containing type of device and corresponding code (keycode, mouse button #, etc.)
     struct InputDeviceInfo
     {
-        public InputDeviceType Type { get; set; }
-        public int Code { get; set; }
+        private readonly InputDeviceType type;
+        public InputDeviceType Type => type;
+
+        private readonly int code;
+        public int Code => code;
+
+        public InputDeviceInfo(InputDeviceType type, int code)
+        {
+            this.type = type;
+            this.code = code;
+        }
     }
 
     //Tuple struct with Action and Index representing primary and secondary control schemes
     struct ActionBinding
     {
-        public readonly InputAction Action;
-        public readonly int Index;
+        private readonly InputAction action;
+        public InputAction Action => action;
+
+        private readonly int index;
+        public int Index => index;
 
         public ActionBinding(InputAction action, int index)
         {
-            Action = action;
-            Index = index;
+            this.action = action;
+            this.index = index;
         }
     }
 
@@ -80,7 +93,21 @@ public class InputBinder : Node
             //bind it to the action pressed 
             //keyEvent.Scancode;
             //set it up in godot
-
+            Bind(new InputDeviceInfo(InputDeviceType.Keyboard, (int)keyEvent.Scancode));
+        }
+        else if (inputEvent is InputEventMouseButton mouseEvent)
+        {
+            Bind(new InputDeviceInfo(InputDeviceType.Mouse, mouseEvent.ButtonIndex));
+        }
+        else if (inputEvent is InputEventJoypadButton controllerButtonEvent)
+        {
+            Bind(new InputDeviceInfo(InputDeviceType.ControllerButton, 
+                controllerButtonEvent.ButtonIndex));
+        }
+        else if (inputEvent is InputEventJoypadMotion controllerMotionEvent)
+        {
+            Bind(new InputDeviceInfo(InputDeviceType.ControllerButton,
+                controllerMotionEvent.Axis));
         }
         // If keyboard
         // If mouse 
