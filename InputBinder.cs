@@ -15,9 +15,8 @@ public class InputBinder : Node
      
      */
 
-
-
-
+    //data structure to hold all the bindings
+    private BindingEntry[][] bindings;
 
 
     //all of the define inputs
@@ -43,24 +42,29 @@ public class InputBinder : Node
         ControllerMotion,
     }
 
+
+
     //Tuple struct containing type of device and corresponding code (keycode, mouse button #, etc.)
-    struct InputDeviceInfo
+    struct BindingEntry
     {
-        private readonly InputDeviceType type;
-        public InputDeviceType Type => type;
+        private readonly InputDeviceType deviceType;
+        public InputDeviceType DeviceType => deviceType;
 
-        private readonly int code;
-        public int Code => code;
+        private readonly int deviceCode;
+        public int DeviceCode => deviceCode;
 
-        public InputDeviceInfo(InputDeviceType type, int code)
+        private readonly InputAction action;
+        public InputAction Action => action;
+        public BindingEntry(InputDeviceType deviceType, int deviceCode, InputAction action)
         {
-            this.type = type;
-            this.code = code;
+            this.deviceType = deviceType;
+            this.deviceCode = deviceCode;
+            this.action = action;
         }
     }
 
-    //Tuple struct with Action and Index representing primary and secondary control schemes
-    struct ActionBinding
+    //Tuple struct with Binding and Index representing primary and secondary control schemes
+    struct ActionInfo
     {
         private readonly InputAction action;
         public InputAction Action => action;
@@ -68,58 +72,73 @@ public class InputBinder : Node
         private readonly int index;
         public int Index => index;
 
-        public ActionBinding(InputAction action, int index)
+        public ActionInfo(InputAction action, int index)
         {
             this.action = action;
             this.index = index;
         }
     }
 
-    private ActionBinding currentAction;
+    private ActionInfo currentAction;
     private bool BindingInProgress => currentAction.Action != InputAction.None;
-    private void FinishBinding()
+
+    public override void _Ready()
     {
-        currentAction = new ActionBinding(InputAction.None, 0);
+        //Grab control bindings from save or get defaults
+        //load them into the BindingEntry list
+        //get all gui nodes
+        //connect startbinding to signal
+    }
+    private void StartBinding(InputAction action, int index)
+    {
+        currentAction = new ActionInfo(action, index);
     }
 
     public override void _Input(InputEvent inputEvent)
     {
         //if we are in change binding state
-        if (!BindingInProgress)
-            return;
-        if (inputEvent is InputEventKey keyEvent)
+        if (BindingInProgress)
         {
-            //get the current key pressed and 
-            //bind it to the action pressed 
-            //keyEvent.Scancode;
-            //set it up in godot
-            Bind(new InputDeviceInfo(InputDeviceType.Keyboard, (int)keyEvent.Scancode));
+            Bind(inputEvent);
+            FinishBinding();
         }
-        else if (inputEvent is InputEventMouseButton mouseEvent)
-        {
-            Bind(new InputDeviceInfo(InputDeviceType.Mouse, mouseEvent.ButtonIndex));
-        }
-        else if (inputEvent is InputEventJoypadButton controllerButtonEvent)
-        {
-            Bind(new InputDeviceInfo(InputDeviceType.ControllerButton, 
-                controllerButtonEvent.ButtonIndex));
-        }
-        else if (inputEvent is InputEventJoypadMotion controllerMotionEvent)
-        {
-            Bind(new InputDeviceInfo(InputDeviceType.ControllerButton,
-                controllerMotionEvent.Axis));
-        }
-        // If keyboard
-        // If mouse 
-
-        FinishBinding();
     }
 
     //TODO: If old key is used, swap it with new key
-    private void Bind(InputDeviceInfo info)
+    private void Bind(InputEvent inputEvent)
     {
+        //get the current key pressed and 
+        //bind it to the action pressed 
+        var (deviceType, deviceCode) = GetDeviceInfo(inputEvent);
+        //access current action
+
+        //set it up in godot
         //release old binding
 
         //set new binding
+
+
+
+
+    }
+    private (InputDeviceType deviceType, int deviceCode) GetDeviceInfo(InputEvent inputEvent)
+    {
+        if (inputEvent is InputEventKey keyEvent)
+            return (InputDeviceType.Keyboard, (int)keyEvent.Scancode);
+        else if (inputEvent is InputEventMouseButton mouseEvent)
+            return (InputDeviceType.Mouse, mouseEvent.ButtonIndex);
+        else if (inputEvent is InputEventJoypadButton controllerButtonEvent)
+            return (InputDeviceType.ControllerButton, controllerButtonEvent.ButtonIndex);
+        else if (inputEvent is InputEventJoypadMotion controllerMotionEvent)
+        {
+            //need to parse what joystick and what direction
+            return (InputDeviceType.ControllerButton, controllerMotionEvent.Axis);
+        }
+        return (InputDeviceType.None, deviceCode: 0);
+    }
+
+    private void FinishBinding()
+    {
+        currentAction = new ActionInfo(InputAction.None, index: 0);
     }
 }
