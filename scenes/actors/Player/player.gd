@@ -1,4 +1,5 @@
 extends KinematicBody2D
+class_name Player
 
 export var SPEED = 300.0
 export var JUMP_SPEED = -400.0
@@ -11,7 +12,7 @@ var in_air = true
 onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _physics_process(delta):
-	
+	return
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction = Input.get_axis("ui_left", "ui_right")
@@ -38,6 +39,5 @@ func _physics_process(delta):
 	else:
 		velocity = move_and_slide(velocity, Vector2(0, -1))
 	
-	self
 
 	
