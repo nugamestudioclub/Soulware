@@ -12,7 +12,7 @@ var player : Player
 func _on_enter(_args) -> void:
 	player = target as Player
 	player.velocity.y = player.JUMP_SPEED
-	change_state("InAir")
+	var _st = change_state("InAir")
 
 
 # This function is called just after the state enters

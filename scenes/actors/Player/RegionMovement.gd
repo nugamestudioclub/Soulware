@@ -15,9 +15,9 @@ func _on_enter(_args) -> void:
 	player = target as Player
 	
 	if player.is_on_floor():
-		change_state("OnGround")
+		var _st = change_state("OnGround")
 	else:
-		change_state("InAir")
+		var _st = change_state("InAir")
 
 
 # This function is called just after the state enters

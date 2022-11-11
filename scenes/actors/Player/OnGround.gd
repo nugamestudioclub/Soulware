@@ -24,10 +24,11 @@ func _after_enter(_args) -> void:
 func _on_update(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_accept"):
-		change_state("Jump")
+		var _st = change_state("Jump")
 		return
 	if not player.is_on_floor():
-		change_state("InAir")
+		var _st = change_state("InAir")
+		return
 	
 
 

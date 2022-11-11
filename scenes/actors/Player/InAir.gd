@@ -23,7 +23,7 @@ func _after_enter(_args) -> void:
 # XSM updates the root first, then the children
 func _on_update(_delta: float) -> void:
 	if player.is_on_floor():
-		var _s = change_state("OnGround")
+		var _st = change_state("OnGround")
 
 
 # This function is called each frame after all the update calls
