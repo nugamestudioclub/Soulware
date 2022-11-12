@@ -39,7 +39,7 @@ func _on_update(_delta: float) -> void:
 	player.velocity.y += gravity
 	
 	if is_active("OnGround"):
-		player.velocity = player.move_and_slide_with_snap(player.velocity, Vector2(0, 1)*12, Vector2(0, -1), true, 4, deg2rad(45))
+		player.velocity = player.move_and_slide_with_snap(player.velocity, Vector2(0, 1)*12, Vector2(0, -1))
 	else:
 		player.velocity = player.move_and_slide(player.velocity, Vector2(0, -1))
 
