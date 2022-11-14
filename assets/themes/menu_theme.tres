@@ -3,3 +3,4 @@
 [resource]
 GridContainer/constants/hseparation = 10
 GridContainer/constants/vseparation = 10
+Label/colors/font_color = Color( 1, 0.717647, 0.717647, 1 )

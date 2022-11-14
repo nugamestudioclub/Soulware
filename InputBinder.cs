@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using static System.Collections.Specialized.BitVector32;
 
 public class InputBinder : Node
 {
@@ -19,10 +20,7 @@ public class InputBinder : Node
     //data structure to hold all the bindings
     private BindingEntry[][] bindings;
 
-    private BindingEntry[][] GetDefaultBindings()
-    {
-        return null;
-    }
+
 
     //all of the define inputs
     enum InputAction
@@ -91,9 +89,70 @@ public class InputBinder : Node
     {
         //Grab control bindings from save or get defaults
         //load them into the BindingEntry list
+        bindings = GetDefaultBindings();
+        
         //get all gui nodes
         //connect startbinding to signal
     }
+    
+    private BindingEntry[][] GetDefaultBindings() {
+        return new BindingEntry[][]{
+            GetDefaultBindingForAction(InputAction.MoveUp),
+            GetDefaultBindingForAction(InputAction.MoveDown),
+            GetDefaultBindingForAction(InputAction.MoveLeft),
+            GetDefaultBindingForAction(InputAction.MoveRight),
+            GetDefaultBindingForAction(InputAction.Jump),
+            GetDefaultBindingForAction(InputAction.Fire),
+            GetDefaultBindingForAction(InputAction.Grapple),
+        };
+    }
+
+
+    private static BindingEntry[] GetDefaultBindingForAction(InputAction action) {
+        int primaryCode;
+        int secondaryCode;
+
+        switch (action) {
+            case InputAction.MoveUp:
+                primaryCode = (int)KeyList.W;
+                secondaryCode = (int)JoystickList.DpadUp;
+                break;
+            case InputAction.MoveDown:
+                primaryCode = (int)KeyList.S;
+                secondaryCode = (int)JoystickList.DpadDown;
+                break;
+            case InputAction.MoveLeft:
+                primaryCode = (int)KeyList.A;
+                secondaryCode = (int)JoystickList.DpadLeft;
+                break;
+            case InputAction.MoveRight:
+                primaryCode = (int)KeyList.D;
+                secondaryCode = (int)JoystickList.DpadRight;
+                break;
+            case InputAction.Jump:
+                primaryCode = (int)KeyList.Space;
+                secondaryCode = (int)JoystickList.XboxA;
+                break;
+            case InputAction.Fire:
+                primaryCode = (int)KeyList.Q;
+                secondaryCode = (int)JoystickList.XboxX;
+                break;
+            case InputAction.Grapple:
+                primaryCode = (int)KeyList.E;
+                secondaryCode = (int)JoystickList.XboxY;
+                break;
+            default:
+                primaryCode = -1;
+                secondaryCode = -1;
+                GD.Print($"Invalid InputAction:{action}");
+                break;
+        }
+        return new BindingEntry[] {
+            new BindingEntry(InputDeviceType.Keyboard, primaryCode, action),
+            new BindingEntry(InputDeviceType.ControllerButton, secondaryCode, action)
+        };
+    }
+
     private void StartBinding(InputAction action, int index)
     {
         currentAction = new ActionInfo(action, index);
