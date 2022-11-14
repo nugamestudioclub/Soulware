@@ -10,7 +10,3 @@ var in_air = true
 
 # This is set to 500 in this project
 onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-
-func _physics_process(_delta):
-	pass
-

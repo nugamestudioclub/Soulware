@@ -46,7 +46,7 @@ script = ExtResource( 5 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("")
+next_state = NodePath("../InAir")
 
 [node name="InAir" type="Node" parent="XSM/RegionMovement"]
 script = ExtResource( 6 )
@@ -60,7 +60,7 @@ script = ExtResource( 8 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("")
+next_state = NodePath("../Jump")
 
 [node name="Jump" type="Node" parent="XSM/RegionMovement/InAir"]
 script = ExtResource( 3 )
