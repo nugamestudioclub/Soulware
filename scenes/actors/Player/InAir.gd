@@ -7,6 +7,8 @@ var player : Player
 # FUNCTIONS TO INHERIT IN YOUR STATES
 #
 
+onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
 # This function is called when the state enters
 # XSM enters the root first, the the children
 func _on_enter(_args) -> void:
@@ -17,3 +19,5 @@ func _on_enter(_args) -> void:
 func _on_update(_delta: float) -> void:
 	if player.is_on_floor():
 		var _st = change_state("OnGround")
+	
+	player.velocity.y += gravity
