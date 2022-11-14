@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 
 public class InputBinder : Node
 {
@@ -18,6 +19,10 @@ public class InputBinder : Node
     //data structure to hold all the bindings
     private BindingEntry[][] bindings;
 
+    private BindingEntry[][] GetDefaultBindings()
+    {
+        return null;
+    }
 
     //all of the define inputs
     enum InputAction

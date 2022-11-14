@@ -11,6 +11,7 @@ config_version=4
 [application]
 
 config/name="robot_roguelike"
+run/main_scene="res://scenes/menus/ControlBinding.tscn"
 config/icon="res://icon.png"
 
 [gui]
