@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://assets/visuals/lab_floor.tres" type="TileSet" id=1]
+[ext_resource path="res://scenes/actors/Player/Player.tscn" type="PackedScene" id=2]
 
 [node name="Node2D" type="Node2D"]
 
@@ -9,3 +10,9 @@ tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 show_collision = true
 format = 1
+tile_data = PoolIntArray( 65538, 0, 0, 131073, 0, 1, 131074, 0, 131076, 131075, 0, 3, 196608, 0, 1, 196609, 0, 65543, 196610, 0, 65538, 196611, 0, 65540, 196612, 0, 3, 196618, 3, 0, 327679, 0, 1, 262144, 0, 65543, 262145, 0, 65538, 262146, 0, 65538, 262147, 0, 65538, 262148, 0, 65540, 262149, 0, 3, 262153, 3, 393216, 262154, 3, 131076, 262155, 3, 393219, 393214, 0, 196609, 393215, 0, 8, 327680, 0, 131074, 327681, 0, 131074, 327682, 0, 131074, 327683, 0, 131074, 327684, 0, 131074, 327685, 0, 262149, 327686, 0, 196610, 327687, 0, 196610, 327688, 3, 196610, 327689, 3, 8, 327690, 3, 131074, 327691, 3, 262149, 327692, 0, 196610, 327693, 0, 196610, 327694, 0, 196611 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 109, 64 )
+SPEED = 175.0
+JUMP_SPEED = -300.0

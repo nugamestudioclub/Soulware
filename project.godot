@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scenes/actors/Player/player.gd"
+}, {
 "base": "Node",
 "class": "State",
 "language": "GDScript",
@@ -35,6 +40,7 @@ _global_script_classes=[ {
 "path": "res://addons/xsm/state_regions.gd"
 } ]
 _global_script_class_icons={
+"Player": "",
 "State": "res://addons/xsm/icons/state.png",
 "StateAnimation": "res://addons/xsm/icons/state.png",
 "StateLoop": "res://addons/xsm/icons/state_loop.png",
@@ -45,11 +51,8 @@ _global_script_class_icons={
 [application]
 
 config/name="robot_roguelike"
+run/main_scene="res://scenes/tileTesting.tscn"
 config/icon="res://icon.png"
-
-[editor_plugins]
-
-enabled=PoolStringArray( "res://addons/xsm/plugin.cfg" )
 
 [gui]
 
@@ -86,6 +89,7 @@ project/assembly_name="robot_roguelike"
 [physics]
 
 common/enable_pause_aware_picking=true
+2d/default_gravity=20
 
 [rendering]
 

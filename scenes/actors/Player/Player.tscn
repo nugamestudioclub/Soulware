@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://addons/xsm/state_regions.gd" type="Script" id=1]
 [ext_resource path="res://scenes/actors/Player/player.gd" type="Script" id=2]
@@ -6,23 +6,81 @@
 [ext_resource path="res://scenes/actors/Player/RegionMovement.gd" type="Script" id=4]
 [ext_resource path="res://scenes/actors/Player/OnGround.gd" type="Script" id=5]
 [ext_resource path="res://scenes/actors/Player/InAir.gd" type="Script" id=6]
-[ext_resource path="res://assets/visuals/robot.png" type="Texture" id=7]
+[ext_resource path="res://assets/visuals/Player_Idle_Animations.png" type="Texture" id=7]
 [ext_resource path="res://addons/xsm/state.gd" type="Script" id=8]
 
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 14, 28 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 7 )
+region = Rect2( 14, 0, 14, 28 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 7 )
+region = Rect2( 28, 0, 14, 28 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 7 )
+region = Rect2( 42, 0, 14, 28 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 7 )
+region = Rect2( 56, 0, 14, 28 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 7 )
+region = Rect2( 70, 0, 14, 28 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 7 )
+region = Rect2( 84, 0, 14, 28 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 7 )
+region = Rect2( 98, 0, 14, 28 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 7 )
+region = Rect2( 112, 0, 14, 28 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 7 )
+region = Rect2( 126, 0, 14, 28 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 7 )
+region = Rect2( 140, 0, 14, 28 )
+
+[sub_resource type="SpriteFrames" id=13]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+} ]
+
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 44, 59 )
+extents = Vector2( 12, 27 )
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 7 )
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 13 )
+animation = "idle"
+frame = 3
+playing = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 3, 3 )
+zoom = Vector2( 0.3, 0.3 )
+editor_draw_limits = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1, 0.5 )
+scale = Vector2( 0.5, 0.5 )
 shape = SubResource( 1 )
 
 [node name="XSM" type="Node" parent="."]
@@ -46,7 +104,7 @@ script = ExtResource( 5 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("../InAir")
+next_state = NodePath("")
 
 [node name="InAir" type="Node" parent="XSM/RegionMovement"]
 script = ExtResource( 6 )
@@ -60,7 +118,7 @@ script = ExtResource( 8 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("../Jump")
+next_state = NodePath("")
 
 [node name="Jump" type="Node" parent="XSM/RegionMovement/InAir"]
 script = ExtResource( 3 )
