@@ -1,13 +1,16 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://addons/xsm/state_regions.gd" type="Script" id=1]
 [ext_resource path="res://scenes/actors/Player/player.gd" type="Script" id=2]
 [ext_resource path="res://scenes/actors/Player/Jump.gd" type="Script" id=3]
-[ext_resource path="res://scenes/actors/Player/RegionMovement.gd" type="Script" id=4]
+[ext_resource path="res://scenes/actors/Player/RegionPhysics.gd" type="Script" id=4]
 [ext_resource path="res://scenes/actors/Player/OnGround.gd" type="Script" id=5]
 [ext_resource path="res://scenes/actors/Player/InAir.gd" type="Script" id=6]
 [ext_resource path="res://assets/visuals/robot.png" type="Texture" id=7]
 [ext_resource path="res://addons/xsm/state.gd" type="Script" id=8]
+[ext_resource path="res://scenes/actors/Player/Grapple.gd" type="Script" id=9]
+[ext_resource path="res://scenes/actors/Player/Connecting.gd" type="Script" id=10]
+[ext_resource path="res://scenes/actors/Player/CanMove.gd" type="Script" id=11]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 44, 59 )
@@ -20,7 +23,6 @@ texture = ExtResource( 7 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 3, 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -32,39 +34,98 @@ fsm_owner = NodePath("")
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("RegionMovement/InAir/Falling")
+next_state = NodePath("RegionPhysics/InAir/Falling")
+
+[node name="RegionGrapple" type="Node" parent="XSM"]
+script = ExtResource( 8 )
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("../RegionMovement")
+
+[node name="NoGrapple" type="Node" parent="XSM/RegionGrapple"]
+script = ExtResource( 8 )
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("../CanGrapple")
+
+[node name="CanGrapple" type="Node" parent="XSM/RegionGrapple"]
+script = ExtResource( 8 )
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("../Grapple")
+
+[node name="Grapple" type="Node" parent="XSM/RegionGrapple"]
+script = ExtResource( 9 )
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("../Connecting")
+
+[node name="Connecting" type="Node" parent="XSM/RegionGrapple"]
+script = ExtResource( 10 )
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("")
 
 [node name="RegionMovement" type="Node" parent="XSM"]
+script = ExtResource( 8 )
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("../RegionPhysics")
+
+[node name="CanMove" type="Node" parent="XSM/RegionMovement"]
+script = ExtResource( 11 )
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("../NoMove")
+
+[node name="NoMove" type="Node" parent="XSM/RegionMovement"]
+script = ExtResource( 8 )
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("")
+
+[node name="RegionPhysics" type="Node" parent="XSM"]
 script = ExtResource( 4 )
 disabled = false
 debug_mode = false
 timed = false
 next_state = NodePath("")
 
-[node name="OnGround" type="Node" parent="XSM/RegionMovement"]
+[node name="OnGround" type="Node" parent="XSM/RegionPhysics"]
 script = ExtResource( 5 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("../InAir")
+next_state = NodePath("../../RegionMovement")
 
-[node name="InAir" type="Node" parent="XSM/RegionMovement"]
+[node name="InAir" type="Node" parent="XSM/RegionPhysics"]
 script = ExtResource( 6 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("")
+next_state = NodePath("../../RegionMovement")
 
-[node name="Falling" type="Node" parent="XSM/RegionMovement/InAir"]
+[node name="Falling" type="Node" parent="XSM/RegionPhysics/InAir"]
 script = ExtResource( 8 )
 disabled = false
 debug_mode = false
 timed = false
 next_state = NodePath("../Jump")
 
-[node name="Jump" type="Node" parent="XSM/RegionMovement/InAir"]
+[node name="Jump" type="Node" parent="XSM/RegionPhysics/InAir"]
 script = ExtResource( 3 )
 disabled = false
 debug_mode = false
 timed = false
 next_state = NodePath("")
+
+[node name="GrapplerOrigin" type="Position2D" parent="."]
+position = Vector2( 44, 15 )
