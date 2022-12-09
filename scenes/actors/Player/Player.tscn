@@ -1,8 +1,7 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://addons/xsm/state_regions.gd" type="Script" id=1]
 [ext_resource path="res://scenes/actors/Player/player.gd" type="Script" id=2]
-[ext_resource path="res://scenes/actors/Player/Jump.gd" type="Script" id=3]
 [ext_resource path="res://scenes/actors/Player/RegionPhysics.gd" type="Script" id=4]
 [ext_resource path="res://scenes/actors/Player/OnGround.gd" type="Script" id=5]
 [ext_resource path="res://scenes/actors/Player/InAir.gd" type="Script" id=6]
@@ -41,31 +40,31 @@ script = ExtResource( 8 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("../RegionMovement")
-
-[node name="NoGrapple" type="Node" parent="XSM/RegionGrapple"]
-script = ExtResource( 8 )
-disabled = false
-debug_mode = false
-timed = false
-next_state = NodePath("../CanGrapple")
+next_state = NodePath("")
 
 [node name="CanGrapple" type="Node" parent="XSM/RegionGrapple"]
 script = ExtResource( 8 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("../Grapple")
+next_state = NodePath("")
 
 [node name="Grapple" type="Node" parent="XSM/RegionGrapple"]
 script = ExtResource( 9 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("../Connecting")
+next_state = NodePath("")
 
 [node name="Connecting" type="Node" parent="XSM/RegionGrapple"]
 script = ExtResource( 10 )
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("")
+
+[node name="NoGrapple" type="Node" parent="XSM/RegionGrapple"]
+script = ExtResource( 8 )
 disabled = false
 debug_mode = false
 timed = false
@@ -76,14 +75,14 @@ script = ExtResource( 8 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("../RegionPhysics")
+next_state = NodePath("")
 
 [node name="CanMove" type="Node" parent="XSM/RegionMovement"]
 script = ExtResource( 11 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("../NoMove")
+next_state = NodePath("")
 
 [node name="NoMove" type="Node" parent="XSM/RegionMovement"]
 script = ExtResource( 8 )
@@ -115,13 +114,6 @@ next_state = NodePath("../../RegionMovement")
 
 [node name="Falling" type="Node" parent="XSM/RegionPhysics/InAir"]
 script = ExtResource( 8 )
-disabled = false
-debug_mode = false
-timed = false
-next_state = NodePath("../Jump")
-
-[node name="Jump" type="Node" parent="XSM/RegionPhysics/InAir"]
-script = ExtResource( 3 )
 disabled = false
 debug_mode = false
 timed = false

@@ -22,6 +22,9 @@ func _on_update(_delta: float) -> void:
 	else:
 		player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED)
 	
-	if Input.is_action_just_pressed("grapple"):
+	if Input.is_action_just_pressed("grapple") and is_active("CanGrapple"):
 		var _st = change_state("Grapple")
 	
+	if Input.is_action_just_pressed("ui_accept") and is_active("OnGround"):
+		player.velocity.y = player.JUMP_SPEED
+		var _st = change_state("InAir")
