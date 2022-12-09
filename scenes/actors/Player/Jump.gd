@@ -12,3 +12,4 @@ var player : Player
 func _on_enter(_args) -> void:
 	player = target as Player
 	player.velocity.y = player.JUMP_SPEED
+	var _st = change_state("Falling")
