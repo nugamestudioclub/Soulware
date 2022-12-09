@@ -1,23 +1,71 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/actors/Grappling Hook/GrapplingHook.gd" type="Script" id=1]
+[ext_resource path="res://addons/xsm/state.gd" type="Script" id=2]
+[ext_resource path="res://scenes/actors/Grappling Hook/Extending.gd" type="Script" id=3]
+[ext_resource path="res://assets/visuals/grappler-ball.png" type="Texture" id=4]
+[ext_resource path="res://assets/visuals/grappler-chain.png" type="Texture" id=5]
+[ext_resource path="res://scenes/actors/Grappling Hook/Retracting.gd" type="Script" id=6]
+[ext_resource path="res://scenes/actors/Grappling Hook/Connecting.gd" type="Script" id=7]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 39.125, 10 )
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 7.5, 3 )
 
-[node name="GrapplingHook" type="Node2D"]
+[sub_resource type="CircleShape2D" id=3]
+radius = 7.5
+
+[node name="GrapplingHook" type="Node2D" groups=["GrapplingHook"]]
 script = ExtResource( 1 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="Chain" type="Area2D" parent="." groups=["GrapplingHook"]]
 
-[node name="CollisionArea" type="Area2D" parent="."]
+[node name="Sprite" type="Sprite" parent="Chain"]
+texture = ExtResource( 5 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 15, 6 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea"]
-position = Vector2( 38.875, 0 )
-shape = SubResource( 1 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chain"]
+shape = SubResource( 2 )
 
-[node name="Timer" type="Timer" parent="."]
-autostart = true
+[node name="Ball" type="Area2D" parent="." groups=["GrapplingHook"]]
 
-[connection signal="body_entered" from="CollisionArea" to="." method="_on_CollisionArea_body_entered"]
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[node name="Sprite" type="Sprite" parent="Ball"]
+texture = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource( 3 )
+
+[node name="HookStateMachine" type="Node" parent="."]
+script = ExtResource( 2 )
+history_size = 0
+fsm_owner = NodePath("")
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("")
+
+[node name="Extending" type="Node" parent="HookStateMachine"]
+script = ExtResource( 3 )
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("")
+
+[node name="Connecting" type="Node" parent="HookStateMachine"]
+script = ExtResource( 7 )
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("")
+
+[node name="Retracting" type="Node" parent="HookStateMachine"]
+script = ExtResource( 6 )
+disabled = false
+debug_mode = false
+timed = false
+next_state = NodePath("")
+
+[connection signal="area_entered" from="Chain" to="." method="_on_CollisionArea_area_entered"]
+[connection signal="body_entered" from="Chain" to="." method="_on_CollisionArea_body_entered"]
+[connection signal="area_entered" from="Ball" to="." method="_on_CollisionArea_area_entered"]
+[connection signal="body_entered" from="Ball" to="." method="_on_CollisionArea_body_entered"]
