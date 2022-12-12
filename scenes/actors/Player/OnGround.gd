@@ -16,7 +16,9 @@ func _on_enter(_args) -> void:
 # XSM updates the root first, then the children
 func _on_update(_delta: float) -> void:
 	
-	if not player.is_on_floor():
-		# Player's upward velocity is stored while snapping to ground, should reset to 0 if falling
+	# Player's upward velocity is stored while snapping to ground, should reset to 0 if not on slope
+	if player.get_floor_angle() == 0:
 		player.velocity.y = 0
+	
+	if not player.is_on_floor():
 		var _st = change_state("Falling")
