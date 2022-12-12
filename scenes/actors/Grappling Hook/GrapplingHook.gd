@@ -2,7 +2,9 @@ extends Node2D
 
 class_name GrapplingHook
 
+#warning-ignore:unused_signal
 signal grapple_success
+#warning-ignore:unused_signal
 signal grapple_retract
 
 var grappled = false

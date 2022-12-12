@@ -31,7 +31,7 @@ func _on_enter(_args) -> void:
 	grappler.set_direction(grappler_dir)
 	
 	player.add_child(grappler)
-	grappler.connect("grapple_success", player, "on_grappler_success")
-	grappler.connect("grapple_retract", player, "on_grappler_retract")
-	player.connect("grappler_disconnect", grappler, "unconnect")
+	var _err1 = grappler.connect("grapple_success", player, "on_grappler_success")
+	var _err2 = grappler.connect("grapple_retract", player, "on_grappler_retract")
+	var _err3 = player.connect("grappler_disconnect", grappler, "unconnect")
 

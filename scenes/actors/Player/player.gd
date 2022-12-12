@@ -18,10 +18,11 @@ var in_air = true
 # This is set to 500 in this project
 onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+#warning-ignore:unused_signal
 signal grappler_disconnect
 
 func _ready():
-	add_to_group("Player")
+	pass
 
 func on_grappler_success(node):
 	xsm.change_state("Connecting", node)

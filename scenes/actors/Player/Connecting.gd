@@ -18,7 +18,7 @@ func _on_enter(connect_node) -> void:
 	player = target as Player
 	connecting = connect_node
 	grappler = player.get_node("GrapplingHook")
-	change_state("NoMove")
+	var _st = change_state("NoMove")
 
 
 # This function is called each frame if the state is ACTIVE
@@ -44,4 +44,4 @@ func _before_exit(_args) -> void:
 # This function is called when the State exits
 # XSM before_exits the children first, then the root
 func _on_exit(_args) -> void:
-	change_state("CanMove")
+	var _st = change_state("CanMove")
