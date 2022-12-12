@@ -14,7 +14,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 44, 59 )
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=["Player"]]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -40,28 +40,28 @@ script = ExtResource( 8 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("")
+next_state = NodePath("../RegionMovement")
 
 [node name="CanGrapple" type="Node" parent="XSM/RegionGrapple"]
 script = ExtResource( 8 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("")
+next_state = NodePath("../Grapple")
 
 [node name="Grapple" type="Node" parent="XSM/RegionGrapple"]
 script = ExtResource( 9 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("")
+next_state = NodePath("../Connecting")
 
 [node name="Connecting" type="Node" parent="XSM/RegionGrapple"]
 script = ExtResource( 10 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("")
+next_state = NodePath("../NoGrapple")
 
 [node name="NoGrapple" type="Node" parent="XSM/RegionGrapple"]
 script = ExtResource( 8 )
@@ -75,14 +75,14 @@ script = ExtResource( 8 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("")
+next_state = NodePath("../RegionPhysics")
 
 [node name="CanMove" type="Node" parent="XSM/RegionMovement"]
 script = ExtResource( 11 )
 disabled = false
 debug_mode = false
 timed = false
-next_state = NodePath("")
+next_state = NodePath("../NoMove")
 
 [node name="NoMove" type="Node" parent="XSM/RegionMovement"]
 script = ExtResource( 8 )
